@@ -1,0 +1,197 @@
+CREATE TABLE enfermedades(
+cod_enfermedades varchar2(9) NOT NULL, /*llave Primaria*/
+descripcion varchar2(100) NOT NULL, /* Descripcion de la enfermedad */
+nivel_enfermedad varchar2(25)NOT NULL, /* nivel medico que la enfermedad*/
+estado varchar2(25) NOT NULL, /* el estado que posee */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos*/
+fecha_crea date NOT NULL, /* fecha de insercion de datos*/
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica*/
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_enfermedades
+PRIMARY KEY (cod_enfermedades)
+);
+
+CREATE TABLE detalle_consulta(
+cod_detalle_consulta varchar2(9) NOT NULL, /*llave Primaria*/
+id_enfermedades varchar2(9) NOT NULL, /*llave Foranea*/
+detalles varchar2(100) NOT NULL, /* detalles durante la consulta */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos */
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_detalle_consulta
+PRIMARY KEY(cod_detalle_consulta)
+);
+
+CREATE TABLE paciente(
+cod_paciente varchar2 (9) NOT NULL, /*llave Primaria*/
+id_exp_familiar varchar2(9) NOT NULL, /*llave Foranea*/
+id_detalle_paciente varchar2(9) NOT NULL, /*llave Foranea*/
+nombre_paciente varchar2(50) NOT NULL, /* nombre del paciente */
+ape_paciente varchar2(50) NOT NULL, /* apellidos del paciente*/
+fecha_nacimiento date NOT NULL, /* fecha de nacimiento del paciente*/
+genero char(1) constraint ch_genero check(genero in ('M', 'F')) NOT NULL, /* genero del paciente */
+ocupacion varchar2(25) NOT NULL, /* ocupacion del paciente */
+observaciones varchar2(50) NOT NULL, /* observaciones del paciente, ej. alergias, padecimientos */
+estado_civil char(15) NOT NULL, /* estado civil del paciente */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos */
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica*/
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_paciente
+PRIMARY KEY(cod_paciente)
+);
+
+CREATE TABLE expediente_familiar(
+cod_exp_familiar varchar2 (9) NOT NULL, /*llave Primaria*/
+responsable_familiar varchar2 (50) NOT NULL, /* nombre del responsable del paciente en caso de emergencia */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inseerta datos*/
+fecha_crea date NOT NULL, /* fecha de insercion*/
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion*/
+CONSTRAINT pk_cod_exp_familiar
+PRIMARY KEY(cod_exp_familiar)
+);
+
+CREATE TABLE detalle_paciente(
+cod_detalle_paciente varchar2 (9) NOT NULL, /*llave Primaria*/
+dui_paciente varchar2(9) NOT NULL, /* dui del paciente*/
+partida_de_nacimiento varchar2(100) NOT NULL, /* numero de partida de nacimiento*/
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos*/
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica*/
+fecha_mod date NOT NULL, /* fecha de modificacion*/
+CONSTRAINT pk_cod_detalle_paciente
+PRIMARY KEY(cod_detalle_paciente)
+);
+
+CREATE TABLE medicamento(
+cod_medicamento varchar2 (9) NOT NULL, /*llave Primaria*/
+nombre varchar2(25) NOT NULL, /* nombre del medicamento*/
+precio float(2) NOT NULL, /* precio del medicamento*/
+cantidad number(3) NOT NULL, /* cantidad de medicamentos que hay */
+presentacion_medicamento varchar2(100) NOT NULL, /* define su presentacion, ej. jarabe, pastillas. */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta */
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_medicamento
+PRIMARY KEY(cod_medicamento) 
+);
+
+CREATE TABLE detalle_receta(
+cod_detalle_receta  varchar2 (9) NOT NULL, /*llave Primaria*/
+nombre_medicamento varchar2(25) NOT NULL, /* nombre del medicamento recetado */
+tipo_medicamento varchar2(25) NOT NULL, /* tipo de medicamento que es*/
+descripcion_medicamento varchar2(100) NOT NULL, /* la decripcion del medicamento y detalles de como consumirlo*/
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta */
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_detalle_receta
+PRIMARY KEY(cod_detalle_receta)
+);
+
+CREATE TABLE receta(
+cod_receta  varchar2 (9) NOT NULL, /*llave Primaria*/
+id_medicamento varchar2(9) NOT NULL, /*llave Foranea*/
+id_detalle_receta varchar2(9) NOT NULL, /*llave Foranea*/
+id_consulta varchar2(9) NOT NULL, /*llave Foranea*/
+fech_receta date NOT NULL, /* fecha en que se extendio la receta al paciente */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta */
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_receta
+PRIMARY KEY(cod_receta)
+);
+
+
+CREATE TABLE servicio_medico(
+cod_servicio varchar2 (9) NOT NULL, /*llave Primaria*/
+id_medico VARCHAR2(9) NOT NULL, /*llave Foranea*/
+fech_servicio date NOT NULL, /* fecha en que se ejecuto el servicio */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta*/
+fecha_crea date NOT NULL, /* fecha de insercion*/
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_servicio
+PRIMARY KEY(cod_servicio)
+);
+
+CREATE TABLE medico(
+dui_medico varchar2(9) NOT NULL, /*llave Primaria*/
+nombre_medico varchar2(25) NOT NULL, /* nombre del medico*/
+ape_medico varchar2(25) NOT NULL, /* apelido del medico */
+direccion_medico nvarchar2(50) NOT NULL, /* direccion del medico */
+estado_civil char(15) NOT NULL, /* estado civil del medico */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos*/
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_dui_medico
+PRIMARY KEY(dui_medico)
+);
+
+
+CREATE TABLE seguridad(
+cod_usuario  varchar2 (9) NOT NULL, /*llave Primaria*/
+nombre_usuario varchar2(25) NOT NULL, /* un username */ 
+clave_usuario varchar2(25) NOT NULL, /* un password*/
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos*/
+fecha_crea date NOT NULL, /* fecha de insercion */
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica */
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_usuario
+primary key(cod_usuario)
+);
+
+CREATE TABLE consulta(
+cod_consulta varchar2 (9) NOT NULL, /*llave Primaria*/
+id_detalle_consulta varchar2(9) NOT NULL, /*llave Foranea*/
+id_medico varchar2 (9) NOT NULL, /*llave Foranea*/
+id_paciente varchar2(9) NOT NULL, /*llave Foranea*/
+fecha_consulta date NOT NULL, /* fecha de consulta */
+hora_consulta nvarchar2 (9) NOT NULL, /* hora de consulta */
+usuario_crea varchar2(10) NOT NULL, /* usuario que inserta datos*/
+fecha_crea date NOT NULL, /* fecha de insercion*/
+usuario_mod varchar2(10) NOT NULL, /* usuario que modifica*/
+fecha_mod date NOT NULL, /* fecha de modificacion */
+CONSTRAINT pk_cod_consulta
+PRIMARY KEY(cod_consulta)
+);
+
+
+
+********************llaves foraneas****************************
+
+ALTER TABLE detalle_consulta
+ADD CONSTRAINT fk_enfermedades FOREIGN KEY (id_enfermedades) REFERENCES enfermedades(cod_enfermedades);
+
+ALTER TABLE consulta
+ADD CONSTRAINT fk_paciente FOREIGN KEY (id_paciente) REFERENCES paciente(cod_paciente);
+
+ALTER TABLE consulta
+ADD CONSTRAINT fk_detalle_consulta FOREIGN KEY (id_detalle_consulta) REFERENCES detalle_consulta(cod_detalle_consulta);
+
+ALTER TABLE consulta
+ADD CONSTRAINT fk_medico FOREIGN KEY (id_medico) REFERENCES medico(dui_medico);
+
+ALTER TABLE receta
+ADD CONSTRAINT fk_medicamento FOREIGN KEY (id_medicamento) REFERENCES medicamento(cod_medicamento);
+
+ALTER TABLE receta
+ADD CONSTRAINT fk_detalle_rec FOREIGN KEY (id_detalle_receta) REFERENCES detalle_receta(cod_detalle_receta);
+
+ALTER TABLE receta
+ADD CONSTRAINT fk_consulta FOREIGN KEY (id_consulta) REFERENCES consulta(cod_consulta);
+
+ALTER TABLE servicio_medico
+ADD CONSTRAINT fk_medic FOREIGN KEY (id_medico) REFERENCES medico(dui_medico);
+
+ALTER TABLE paciente
+ADD CONSTRAINT fk_exp_familiar FOREIGN KEY (id_exp_familiar) REFERENCES expediente_familiar (cod_exp_familiar);
+
+ALTER TABLE paciente
+ADD CONSTRAINT fk_detalle_pacient FOREIGN KEY (id_detalle_paciente) REFERENCES detalle_paciente(cod_detalle_paciente);
+

@@ -1,0 +1,191 @@
+create or replace trigger tg_enfermedades_insert before insert 
+ on enfermedades 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_enfermedades_update before update 
+ on enfermedades 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+  create or replace trigger tg_detalle_consulta_insert before insert 
+ on detalle_consulta 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_detalle_consulta_update before update 
+ on detalle_consulta 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+  create or replace trigger tg_consulta_insert before insert 
+ on consulta 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_consulta_update before update 
+ on consulta 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+ 
+  create or replace trigger tg_paciente_insert before insert 
+ on paciente
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_paciente_update before update 
+ on paciente 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+ 
+  create or replace trigger tg_expediente_familiar_insert before insert 
+ on expediente_familiar
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_expediente_familiar_update before update 
+ on expediente_familiar 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+  create or replace trigger tg_detalle_paciente_insert before insert 
+ on detalle_paciente 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_detalle_paciente_update before update 
+ on detalle_paciente 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+ 
+  create or replace trigger tg_medicamento_insert before insert 
+ on medicamento 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_medicamento_update before update 
+ on medicamento 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+  create or replace trigger tg_receta_insert before insert 
+ on receta 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_receta_update before update 
+ on receta 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+ 
+  create or replace trigger tg_servicio_medico_insert before insert 
+ on servicio_medico 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_servicio_medico_update before update 
+ on servicio_medico 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+ 
+  create or replace trigger tg_medico_insert before insert 
+ on medico 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_medico_update before update 
+ on medico 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+ 
+ 
+  create or replace trigger tg_seguridad_insert before insert 
+ on seguridad 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;
+ 
+  create or replace trigger tg_seguridad_update before update 
+ on seguridad 
+ for each row 
+ begin 
+ select user,sysdate into:new.usuario_crea, :new.fecha_crea
+ from dual;
+ end;

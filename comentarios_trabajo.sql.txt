@@ -1,0 +1,91 @@
+/* Ver lista de tablas y sus comentarios */
+
+SELECT TABLE_NAME TABLA, COMMENTS COMENTARIO 
+FROM USER_TAB_COMMENTS
+WHERE TABLE_NAME NOT LIKE 'BIN$%'
+ORDER BY TABLA;
+
+
+/*se obtiene los campos, cuales son llave primaria, llave foránea, el tipo de datos, longitud y el comentario*/
+
+SELECT 
+X.TABLE_NAME NOMBRE_TABLA, X.COLUMN_ID POSICION, 
+LLAVE,
+X.COLUMN_NAME NOMBRE_COLUMNA, 
+DATA_TYPE TIPO_DATO, DATA_LENGTH LONGITUD, COMMENTS COMENTARIO
+FROM
+(
+    SELECT A.TABLE_NAME, A.COLUMN_ID, A.COLUMN_NAME,
+    A.DATA_TYPE, A.DATA_LENGTH, 
+    B.COMMENTS
+ 
+    FROM USER_TAB_COLUMNS A
+    LEFT JOIN USER_COL_COMMENTS B
+    ON A.TABLE_NAME = B.TABLE_NAME
+    AND A.COLUMN_NAME=B.COLUMN_NAME
+) X 
+LEFT JOIN
+(
+    SELECT UC.TABLE_NAME, COLUMN_NAME, 
+    CASE CONSTRAINT_TYPE 
+        WHEN 'P' THEN 'PK' 
+        WHEN 'R' THEN 'FK'
+    END LLAVE
+    FROM USER_CONSTRAINTS UC
+    LEFT JOIN USER_CONS_COLUMNS UCC
+    ON UC.CONSTRAINT_NAME = UCC.CONSTRAINT_NAME
+    WHERE UC.CONSTRAINT_TYPE='P'
+    OR UC.CONSTRAINT_TYPE='R'
+) Y
+ON X.TABLE_NAME=Y.TABLE_NAME 
+AND X.COLUMN_NAME = Y.COLUMN_NAME
+ORDER BY X.TABLE_NAME, X.COLUMN_ID;
+
+/* Muestra los indices de los campos de las tablas */
+
+SELECT TABLE_NAME TABLA, INDEX_NAME NOMBRE_INDICE, COLUMN_NAME COLUMNA, COLUMN_POSITION POSICION 
+FROM USER_IND_COLUMNS
+ORDER BY TABLE_NAME, INDEX_NAME, COLUMN_POSITION;
+
+
+
+/* Tablas comentadas */
+
+COMMENT ON TABLE CONSULTA IS 'ESTA ES MI TABLA DE CONSULTA';
+COMMENT ON TABLE detalle_consulta IS 'ESTA ES MI TABLA DE DETALLE_CONSULTA';
+COMMENT ON TABLE DETALLE_PACIENTE IS 'ESTA ES MI TABLA DE DETALLE_PACIENTE';
+COMMENT ON TABLE DETALLE_RECETA IS 'ESTA ES MI TABLA DE DETALLE_RECETA';
+COMMENT ON TABLE ENFERMEDADES IS 'ESTA ES MI TABLA DE ENFERMEDADES';
+COMMENT ON TABLE EXPEDIENTE_FAMILIAR IS 'ESTA ES MI TABLA DE EXPEDIENTE FAMILIAR';
+COMMENT ON TABLE MEDICAMENTO IS 'ESTA ES MI TABLA DE MEDICAMENTO';
+COMMENT ON TABLE MEDICO IS 'ESTA ES MI TABLA DE MEDICO';
+COMMENT ON TABLE PACIENTE IS 'ESTA ES MI TABLA DE PACIENTE';
+COMMENT ON TABLE RECETA IS 'ESTA ES MI TABLA DE RECETA';
+COMMENT ON TABLE SEGURIDAD IS 'ESTA ES MI TABLA DE SEGURIDAD';
+COMMENT ON TABLE SERVICIO_MEDICO IS 'ESTA ES MI TABLA DE SERVICIO_MEDICO';
+
+/* Campos comentados */
+
+COMMENT ON COLUMN consulta.cod_consulta IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN consulta.id_detalle_consulta IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN consulta.id_medico IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN consulta.id_paciente IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN detalle_consulta.cod_detalle_consulta IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN detalle_consulta.id_enfermedades IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN detalle_paciente.cod_detalle_paciente IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN detalle_consulta.dui_paciente IS 'campo que muestra su codigo identificar dui de un civil';
+COMMENT ON COLUMN detalle_receta.cod_detalle_receta IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN enfermedades.cod_enfermedades IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN expediente_familiar.cod_exp_familiar IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN medicamento.cod_medicamento IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN medico.dui_medico IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN paciente.cod_paciente IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN paciente.id_exp_familiar IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN receta.cod_receta IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN receta.id_medicamento IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN receta.id_detalle_receta IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN receta.id_consult IS 'Campo con llave foranea como identificador';
+COMMENT ON COLUMN seguridad.cod_usuario IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN servicio_medico.cod_servicio IS 'Campo con llave primaria como identificador';
+COMMENT ON COLUMN servicio_medico.id_medico IS 'Campo con llave foranea como identificador';
+
